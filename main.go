@@ -2,7 +2,7 @@ package main
 
 import (
 	"account-service-app-project/config"
-	"account-service-app-project/services"
+	"account-service-app-project/controllers"
 	"fmt"
 )
 
@@ -42,26 +42,8 @@ func main() {
 			case 1:
 				break
 			case 2:
-				noHp := ""
-				password := ""
-				fmt.Println("Masukkan no hp")
-				fmt.Scanln(&noHp)
-				fmt.Println("Masukkan password")
-				fmt.Scanln(&password)
-
-				userResult, err := services.Login(db, noHp, password)
-				fmt.Println(userResult)
-				if err != nil {
-					fmt.Println(err)
-					break
-				}
-
-				if userResult.UserId == 0 {
-					fmt.Println("No Hp atau password tidak ditemukan.")
-					break
-				}
-				NoHp = userResult.NoTelepon
-				fmt.Println("Selamat datang berhasil login.")
+				NoHp = controllers.Login(db)
+				break
 			case 0:
 				fmt.Println("Terimakasih Telah bertransaksi.")
 				NoHp = ""
