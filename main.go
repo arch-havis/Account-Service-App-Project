@@ -34,6 +34,9 @@ func main() {
 		fmt.Println("0. Logout dari akun")
 		fmt.Scanln(&Pilihan)
 
+		/*
+			kasus 1: ketika user belum login
+		*/
 		if NoHp == "" {
 			switch Pilihan {
 			case 1:
@@ -59,16 +62,16 @@ func main() {
 				}
 				NoHp = userResult.NoTelepon
 				fmt.Println("Selamat datang berhasil login.")
-				break
 			case 0:
 				fmt.Println("Terimakasih Telah bertransaksi.")
 				NoHp = ""
-				break
 			default:
 				fmt.Println("Masukkan sesuai di menu.")
-				break
 			}
 		} else {
+			/*
+				kasus 2: ketika user sudah login
+			*/
 			switch Pilihan {
 			case 3:
 				break
@@ -89,10 +92,8 @@ func main() {
 			case 0:
 				fmt.Println("Terimakasih Telah bertransaksi.")
 				NoHp = ""
-				break
 			default:
 				fmt.Println("Masukkan sesuai di menu.")
-				break
 			}
 		}
 		terminator := ""
