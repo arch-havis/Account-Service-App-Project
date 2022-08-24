@@ -37,7 +37,7 @@ func (s *Topup) Store(noHp string, nominal float64) (int, error) {
 }
 
 func (s *Topup) History(noHp string) (entities.Users, error) {
-	userResult, err := s.RepositoriesUser.FindByNoHp(noHp)
+	userResult, err := s.RepositoriesTopUp.History(noHp)
 	if err != nil {
 		return entities.Users{}, err
 	}

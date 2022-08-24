@@ -5,10 +5,13 @@ import (
 	"fmt"
 )
 
-func Topup(noHp string, topupService services.Topup) {
-	fmt.Println("Masukkkan nominal anda:")
-
+func Topup(topupService services.Topup) {
 	var nominal float64
+	var noHp string
+	fmt.Println("Masukkkan nomor telepon tujuan: ")
+	fmt.Scanln(&noHp)
+
+	fmt.Println("Masukkkan nominal anda:")
 	fmt.Scanln(&nominal)
 
 	topupResult, err := topupService.Store(noHp, nominal)
@@ -32,6 +35,10 @@ func HistoryTopup(noHP string, topupService services.Topup) {
 	if err != nil {
 		fmt.Println(err)
 		return
+	}
+
+	if len(topupHistoryResult.UserTopup) < 1 {
+		fmt.Println("Tidak ada data history topup")
 	}
 
 	for _, value := range topupHistoryResult.UserTopup {
