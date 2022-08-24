@@ -3,6 +3,8 @@ package main
 import (
 	"account-service-app-project/config"
 	"account-service-app-project/controllers"
+	"account-service-app-project/repositories"
+	"account-service-app-project/services"
 	"fmt"
 )
 
@@ -21,17 +23,29 @@ func main() {
 	/*
 		user repositories dan user service
 	*/
-	// var userRepo repositories.User = repositories.User{DB: db}
+	var userRepo repositories.User = repositories.User{DB: db}
 	// var userService services.User = services.User{Repositories: userRepo}
 
+	/*
+		topup repositories dan topup service
+	*/
+	var topupRepository repositories.Topup = repositories.Topup{DB: db}
+	var topupService services.Topup = services.Topup{
+		RepositoriesUser:  userRepo,
+		RepositoriesTopUp: topupRepository,
+	}
+
 	for isLanjutkan {
+
 		if NoHp == "" {
 			fmt.Println("1. Register")
 			fmt.Println("2. Login")
 		} else {
 			fmt.Println("3. Profil Saya\n4. Perbarui Profile Saya\n5. Hapus Profile Saya\n6. Topup\n7. Transfer\n8. History Topup\n9. History Transfer\n10.Lihat Profile Orang")
+			fmt.Println("0. Logout dari akun")
 		}
-		fmt.Println("0. Logout dari akun")
+
+		// inputan user
 		fmt.Scanln(&Pilihan)
 
 		/*
@@ -43,7 +57,6 @@ func main() {
 				break
 			case 2:
 				NoHp = controllers.Login(db)
-				break
 			case 0:
 				fmt.Println("Terimakasih Telah bertransaksi.")
 				NoHp = ""
@@ -62,7 +75,7 @@ func main() {
 			case 5:
 				break
 			case 6:
-				break
+				controllers.Topup(NoHp, topupService)
 			case 7:
 				break
 			case 8:
@@ -78,6 +91,7 @@ func main() {
 				fmt.Println("Masukkan sesuai di menu.")
 			}
 		}
+
 		terminator := ""
 		fmt.Println("Apakah mau lanjut? y/n")
 		fmt.Scanln(&terminator)
