@@ -41,12 +41,44 @@ func (r *User) FindById(id int) (entities.Users, error) {
 }
 
 func (r *User) FindByNoHp(nohp string) (entities.Users, error) {
-	userResult := entities.Users{}
-	err := r.DB.QueryRow("SELECT user_id, no_telepon, password, nama, alamat, gender, saldo FROM users WHERE no_telepon = ?", nohp).Scan(&userResult.UserId, &userResult.NoTelepon, &userResult.Password, &userResult.Nama, &userResult.Alamat, &userResult.Gender, &userResult.Saldo)
-
+	userStmt, err := r.DB.Prepare(`
+		SELECT u.*, tp.* FROM users u
+		INNER JOIN topup tp ON tp.user_id = u.user_id
+		WHERE u.no_telepon = ?
+	`)
 	if err != nil {
 		return entities.Users{}, err
 	}
 
-	return userResult, nil
+	rows, err := userStmt.Query(nohp)
+	if err != nil {
+		return entities.Users{}, err
+	}
+
+	userData := entities.Users{}
+
+	for rows.Next() {
+		topupData := entities.Topup{}
+		err := rows.Scan(
+			&userData.UserId,
+			&userData.NoTelepon,
+			&userData.Nama, &userData.Password,
+			&userData.Alamat,
+			&userData.Gender,
+			&userData.Saldo,
+			&topupData.TopupId,
+			&topupData.UserId,
+			&topupData.NominalTopup,
+			&topupData.CreatedAt,
+			&topupData.UpdatedAt,
+		)
+
+		if err != nil {
+			return entities.Users{}, err
+		}
+
+		userData.UserTopup = append(userData.UserTopup, topupData)
+	}
+
+	return userData, nil
 }
