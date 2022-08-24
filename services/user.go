@@ -22,5 +22,9 @@ func (s *User) FindById(id int) (entities.Users, error) {
 }
 
 func (s *User) FindByNoHp(noHp string) (entities.Users, error) {
-	return entities.Users{}, nil
+	userResult, err := s.Repositories.FindByNoHp(noHp)
+	if err != nil {
+		return entities.Users{}, err
+	}
+	return userResult, nil
 }

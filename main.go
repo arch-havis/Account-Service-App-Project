@@ -24,7 +24,7 @@ func main() {
 		user repositories dan user service
 	*/
 	var userRepo repositories.User = repositories.User{DB: db}
-	// var userService services.User = services.User{Repositories: userRepo}
+	var userService services.User = services.User{Repositories: userRepo}
 
 	/*
 		topup repositories dan topup service
@@ -83,7 +83,7 @@ func main() {
 			case 9:
 				break
 			case 10:
-				break
+				controllers.SearchProfile(userService)
 			case 0:
 				fmt.Println("Terimakasih Telah bertransaksi.")
 				NoHp = ""
