@@ -54,6 +54,7 @@ func main() {
 		if NoHp == "" {
 			switch Pilihan {
 			case 1:
+				controllers.Register(userService)
 				break
 			case 2:
 				NoHp = controllers.Login(db)

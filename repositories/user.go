@@ -10,7 +10,19 @@ type User struct {
 }
 
 func (r *User) Store(user entities.Users) (int, error) {
-	return 0, nil
+	userStmt, err := r.DB.Prepare("INSERT INTO users (no_telepon, nama, password, alamat, gender, saldo) VALUES (?, ?, ?, ?, ?, ?)")
+	if err != nil {
+		return -1, err
+	}
+	userResult, err := userStmt.Exec(user.NoTelepon, user.Nama, user.Password, user.Alamat, user.Gender, user.Saldo)
+	if err != nil {
+		return -1, err
+	}
+	rowAffected, err := userResult.RowsAffected()
+	if err != nil {
+		return -1, err
+	}
+	return int(rowAffected), nil
 }
 
 func (r *User) Update(user entities.Users, id int) (int, error) {
