@@ -1,6 +1,9 @@
 package repositories
 
-import "database/sql"
+import (
+	"account-service-app-project/entities"
+	"database/sql"
+)
 
 type Topup struct {
 	DB *sql.DB
@@ -31,4 +34,48 @@ func (r *Topup) Store(userId int, nominal float64) (int, error) {
 	}
 
 	return int(rowAffected), nil
+}
+
+func (r *Topup) History(nohp string) (entities.Users, error) {
+	userStmt, err := r.DB.Prepare(`
+		SELECT u.*, tp.* FROM users u
+		RIGHT JOIN topup tp ON tp.user_id = u.user_id
+		WHERE u.no_telepon = ?
+	`)
+
+	if err != nil {
+		return entities.Users{}, err
+	}
+
+	rows, err := userStmt.Query(nohp)
+	if err != nil {
+		return entities.Users{}, err
+	}
+
+	userData := entities.Users{}
+
+	for rows.Next() {
+		topupData := entities.Topup{}
+		err := rows.Scan(
+			&userData.UserId,
+			&userData.NoTelepon,
+			&userData.Nama, &userData.Password,
+			&userData.Alamat,
+			&userData.Gender,
+			&userData.Saldo,
+			&topupData.TopupId,
+			&topupData.UserId,
+			&topupData.NominalTopup,
+			&topupData.CreatedAt,
+			&topupData.UpdatedAt,
+		)
+
+		if err != nil {
+			return entities.Users{}, err
+		}
+
+		userData.UserTopup = append(userData.UserTopup, topupData)
+	}
+
+	return userData, nil
 }

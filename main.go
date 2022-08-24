@@ -75,7 +75,7 @@ func main() {
 			case 5:
 				break
 			case 6:
-				controllers.Topup(NoHp, topupService)
+				controllers.Topup(topupService)
 			case 7:
 				break
 			case 8:
