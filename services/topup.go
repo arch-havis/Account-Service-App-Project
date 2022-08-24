@@ -36,6 +36,10 @@ func (s *Topup) Store(noHp string, nominal float64) (int, error) {
 	return 0, nil
 }
 
-func (s *Topup) TopupHistory() ([]entities.Topup, error) {
-	return []entities.Topup{}, nil
+func (s *Topup) History(noHp string) (entities.Users, error) {
+	userResult, err := s.RepositoriesUser.FindByNoHp(noHp)
+	if err != nil {
+		return entities.Users{}, err
+	}
+	return userResult, nil
 }
