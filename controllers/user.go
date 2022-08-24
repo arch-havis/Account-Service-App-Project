@@ -27,5 +27,5 @@ func Login(db *sql.DB) string {
 	}
 
 	fmt.Println("Selamat datang berhasil login.")
-	return userResult.Nama
+	return userResult.NoTelepon
 }
