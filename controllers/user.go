@@ -100,3 +100,40 @@ func ReadUser(NoHp string, userService services.User) {
 	fmt.Println("Saldo: ", UserData.Saldo)
 	fmt.Println("======")
 }
+
+func UpdateUser(NoHp string, userService services.User) {
+	userData := entities.Users{}
+	PilihanGender := 1
+	fmt.Println("Masukan Nama: ")
+	fmt.Scanln(&userData.Nama)
+	fmt.Println("Masukan No Telepon: ")
+	fmt.Scanln(&userData.NoTelepon)
+	fmt.Println("Masukan Password: ")
+	fmt.Scanln(&userData.Password)
+	fmt.Println("Masukan Alamat: ")
+	fmt.Scanln(&userData.Alamat)
+	fmt.Println("Masukan Gender")
+	fmt.Println("1 Laki-laki\n2 Perempuan\n3 Skip Gender")
+	fmt.Scanln(&PilihanGender)
+
+	switch PilihanGender {
+	case 1:
+		userData.Gender = "Laki-laki"
+	case 2:
+		userData.Gender = "Perempuan"
+	case 3:
+		userData.Gender = ""
+	}
+
+	userResult, err := userService.Update(userData, NoHp)
+	if err != nil {
+		fmt.Println(err)
+		return
+
+	}
+	if userResult < 1 {
+		fmt.Println("Data tidak berhasil di update, mohon coba lagi")
+		return
+	}
+	fmt.Println("Data berhasil di update")
+}

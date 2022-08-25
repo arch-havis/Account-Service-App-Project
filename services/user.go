@@ -17,8 +17,36 @@ func (s *User) Store(user entities.Users) (int, error) {
 	return resultStore, nil
 }
 
-func (s *User) Update(user entities.Users, id int) (int, error) {
-	return 0, nil
+func (s *User) Update(userInput entities.Users, NoHp string) (int, error) {
+	userDataFromDb, err := s.Repositories.FindByNoHp(NoHp)
+	if err != nil {
+		return -1, err
+	}
+
+	if userInput.Nama != "" && userInput.Nama != userDataFromDb.Nama {
+		userDataFromDb.Nama = userInput.Nama
+	}
+
+	if userInput.NoTelepon != "" && userInput.NoTelepon != userDataFromDb.NoTelepon {
+		userDataFromDb.NoTelepon = userInput.NoTelepon
+	}
+
+	if userInput.Alamat != "" && userInput.Alamat != userDataFromDb.Alamat {
+		userDataFromDb.Alamat = userInput.Alamat
+	}
+
+	if userInput.Gender != "" && userInput.Gender != userDataFromDb.Gender {
+		userDataFromDb.Gender = userInput.Gender
+	}
+
+	if userInput.Password != "" && userInput.Password != userDataFromDb.Password {
+		userDataFromDb.Password = userInput.Password
+	}
+	userResult, err := s.Repositories.Update(userDataFromDb, userDataFromDb.UserId)
+	if err != nil {
+		return -1, err
+	}
+	return userResult, nil
 }
 
 func (s *User) Destroy(id int) (int, error) {
