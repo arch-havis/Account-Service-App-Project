@@ -9,6 +9,14 @@ type User struct {
 	Repositories repositories.User
 }
 
+func (s *User) Store(user entities.Users) (int, error) {
+	resultStore, err := s.Repositories.Store(user)
+	if err != nil {
+		return -1, err
+	}
+	return resultStore, nil
+}
+
 func (s *User) Update(user entities.Users, id int) (int, error) {
 	return 0, nil
 }
