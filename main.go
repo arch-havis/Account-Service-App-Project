@@ -55,7 +55,6 @@ func main() {
 			switch Pilihan {
 			case 1:
 				controllers.Register(userService)
-				break
 			case 2:
 				NoHp = controllers.Login(db)
 			case 0:
@@ -74,7 +73,17 @@ func main() {
 			case 4:
 				controllers.UpdateUser(NoHp, userService)
 			case 5:
-				break
+				userResult, err := controllers.DeleteUser(NoHp, userService)
+				if err != nil {
+					fmt.Println(err)
+					break
+				}
+				if userResult < 1 {
+					fmt.Println("Akun tidak bisa di hapus, coba lagi")
+					break
+				}
+				fmt.Println("Akun sudah berhasil di hapus")
+				NoHp = ""
 			case 6:
 				controllers.Topup(topupService)
 			case 7:

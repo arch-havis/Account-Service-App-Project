@@ -49,8 +49,16 @@ func (s *User) Update(userInput entities.Users, NoHp string) (int, error) {
 	return userResult, nil
 }
 
-func (s *User) Destroy(id int) (int, error) {
-	return 0, nil
+func (s *User) Destroy(NoHp string) (int, error) {
+	userResult, err := s.Repositories.FindByNoHp(NoHp)
+	if err != nil {
+		return -1, err
+	}
+	rowAffected, err := s.Repositories.Destroy(userResult.UserId)
+	if err != nil {
+		return -1, err
+	}
+	return rowAffected, nil
 }
 
 func (s *User) FindById(id int) (entities.Users, error) {
