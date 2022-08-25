@@ -45,7 +45,19 @@ func (r *User) Update(user entities.Users, id int) (int, error) {
 }
 
 func (r *User) Destroy(id int) (int, error) {
-	return 0, nil
+	userStmt, err := r.DB.Prepare("DELETE FROM users WHERE user_id = ?")
+	if err != nil {
+		return -1, err
+	}
+	userResult, err := userStmt.Exec(id)
+	if err != nil {
+		return -1, err
+	}
+	RowsAffected, err := userResult.RowsAffected()
+	if err != nil {
+		return -1, err
+	}
+	return int(RowsAffected), nil
 }
 
 func (r *User) FindById(id int) (entities.Users, error) {

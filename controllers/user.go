@@ -132,8 +132,19 @@ func UpdateUser(NoHp string, userService services.User) {
 
 	}
 	if userResult < 1 {
-		fmt.Println("Data tidak berhasil di update, mohon coba lagi")
+		fmt.Println("Akun tidak berhasil di update, mohon coba lagi")
 		return
 	}
-	fmt.Println("Data berhasil di update")
+	fmt.Println("Akun berhasil di update")
+}
+func DeleteUser(NoHp string, userService services.User) (int, error) {
+	userResult, err := userService.Destroy(NoHp)
+	if err != nil {
+		return -1, err
+
+	}
+	if userResult < 1 {
+		return 0, nil
+	}
+	return 1, nil
 }
