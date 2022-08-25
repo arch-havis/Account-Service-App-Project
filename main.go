@@ -34,6 +34,14 @@ func main() {
 		RepositoriesUser:  userRepo,
 		RepositoriesTopUp: topupRepository,
 	}
+	/*
+		transfer repository dan transfer service
+	*/
+	var transferRepository repositories.Transfer = repositories.Transfer{DB: db}
+	var transferService services.Transfer = services.Transfer{
+		Repositories:     transferRepository,
+		RepositoriesUser: userRepo,
+	}
 
 	for isLanjutkan {
 
@@ -87,6 +95,7 @@ func main() {
 			case 6:
 				controllers.Topup(topupService)
 			case 7:
+				controllers.Transfer(NoHp, transferService)
 				break
 			case 8:
 				controllers.HistoryTopup(NoHp, topupService)

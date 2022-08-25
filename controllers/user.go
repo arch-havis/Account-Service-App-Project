@@ -137,6 +137,7 @@ func UpdateUser(NoHp string, userService services.User) {
 	}
 	fmt.Println("Akun berhasil di update")
 }
+
 func DeleteUser(NoHp string, userService services.User) (int, error) {
 	userResult, err := userService.Destroy(NoHp)
 	if err != nil {
@@ -147,4 +148,12 @@ func DeleteUser(NoHp string, userService services.User) (int, error) {
 		return 0, nil
 	}
 	return 1, nil
+}
+
+func CheckSaldo(NoHp string, userService services.User) (float64, error) {
+	userData, err := userService.FindByNoHp(NoHp)
+	if err != nil {
+		return 0, err
+	}
+	return userData.Saldo, nil
 }
