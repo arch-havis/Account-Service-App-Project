@@ -1,5 +1,7 @@
 package entities
 
+import "time"
+
 type Users struct {
 	UserId       int
 	NoTelepon    string
@@ -8,6 +10,7 @@ type Users struct {
 	Alamat       string
 	Gender       string
 	Saldo        float64
+	UpdatedAt    time.Time
 	UserTopup    []Topup
 	UserTransfer []Transfer
 }
