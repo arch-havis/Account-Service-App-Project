@@ -100,7 +100,7 @@ func main() {
 			case 8:
 				controllers.HistoryTopup(NoHp, topupService)
 			case 9:
-				break
+				controllers.HistoryTransfer(NoHp, transferService)
 			case 10:
 				controllers.SearchProfile(userService)
 			case 0:
@@ -112,7 +112,7 @@ func main() {
 		}
 
 		terminator := ""
-		fmt.Println("Apakah mau lanjut? y/n")
+		fmt.Print("\n\n\nApakah mau lanjut? y/n\n")
 		fmt.Scanln(&terminator)
 		if terminator != "y" {
 			isLanjutkan = false

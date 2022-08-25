@@ -59,6 +59,16 @@ func (s *Transfer) Store(NoTelpPengirim string, NoHpPenerima string, nominal flo
 	return affectedRow, nil
 }
 
-func (s *Transfer) HistoryTransfer(userId int) ([]entities.Transfer, error) {
-	return []entities.Transfer{}, nil
+func (s *Transfer) HistoryTransfer(NoHp string) ([]entities.Transfer, error) {
+	userResult, err := s.RepositoriesUser.FindByNoHp(NoHp)
+	if err != nil {
+		return []entities.Transfer{}, err
+	}
+
+	transferResult, err := s.Repositories.GetHistory(userResult.UserId)
+	if err != nil {
+		return []entities.Transfer{}, err
+	}
+
+	return transferResult, nil
 }
