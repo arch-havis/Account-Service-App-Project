@@ -85,3 +85,18 @@ func Register(serviceUser services.User) {
 	fmt.Println("Berhasil Membuat Akun")
 
 }
+
+func ReadUser(NoHp string, userService services.User) {
+	UserData, err := userService.FindByNoHp(NoHp)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println("======")
+	fmt.Println("Atas nama: ", UserData.Nama)
+	fmt.Println("No Telpon: ", UserData.NoTelepon)
+	fmt.Println("Alamat: ", UserData.Alamat)
+	fmt.Println("Gender: ", UserData.Gender)
+	fmt.Println("Saldo: ", UserData.Saldo)
+	fmt.Println("======")
+}

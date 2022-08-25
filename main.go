@@ -70,7 +70,7 @@ func main() {
 			*/
 			switch Pilihan {
 			case 3:
-				break
+				controllers.ReadUser(NoHp, userService)
 			case 4:
 				break
 			case 5:
