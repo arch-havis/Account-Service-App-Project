@@ -72,7 +72,7 @@ func main() {
 			case 3:
 				controllers.ReadUser(NoHp, userService)
 			case 4:
-				break
+				controllers.UpdateUser(NoHp, userService)
 			case 5:
 				break
 			case 6:
