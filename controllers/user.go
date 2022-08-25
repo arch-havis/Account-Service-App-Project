@@ -149,11 +149,3 @@ func DeleteUser(NoHp string, userService services.User) (int, error) {
 	}
 	return 1, nil
 }
-
-func CheckSaldo(NoHp string, userService services.User) (float64, error) {
-	userData, err := userService.FindByNoHp(NoHp)
-	if err != nil {
-		return 0, err
-	}
-	return userData.Saldo, nil
-}
