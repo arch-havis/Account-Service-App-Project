@@ -44,16 +44,20 @@ func main() {
 	}
 
 	for isLanjutkan {
-
 		if NoHp == "" {
+			fmt.Println("=======[Selamat Datang Di Account Service App]===========")
+			fmt.Println("")
 			fmt.Println("1. Register")
 			fmt.Println("2. Login")
 		} else {
-			fmt.Println("3. Profil Saya\n4. Perbarui Profile Saya\n5. Hapus Profile Saya\n6. Topup\n7. Transfer\n8. History Topup\n9. History Transfer\n10.Lihat Profile Orang")
+			fmt.Println("==========[Halaman Beranda]===========")
+			fmt.Println("")
+			fmt.Println("3. Profil Saya\n4. Perbarui Profile Saya\n5. Hapus Profile Saya\n6. Top-up\n7. Transfer\n8. History Top-up\n9. History Transfer\n10.Lihat Profile Orang")
 			fmt.Println("0. Logout dari akun")
 		}
 
 		// inputan user
+		fmt.Println("\nMasukkan pilihan anda: ")
 		fmt.Scanln(&Pilihan)
 
 		/*
@@ -62,8 +66,10 @@ func main() {
 		if NoHp == "" {
 			switch Pilihan {
 			case 1:
+				fmt.Println("\n======[Register Akun]=======")
 				controllers.Register(userService)
 			case 2:
+				fmt.Println("\n======[Halaman Login]========")
 				NoHp = controllers.Login(db)
 			case 0:
 				fmt.Println("Terimakasih Telah bertransaksi.")
@@ -77,10 +83,13 @@ func main() {
 			*/
 			switch Pilihan {
 			case 3:
+				fmt.Println("\n=======[Profile Saya]=======")
 				controllers.ReadUser(NoHp, userService)
 			case 4:
+				fmt.Println("\n=======[Perbarui Profile]=======")
 				controllers.UpdateUser(NoHp, userService)
 			case 5:
+				fmt.Println("\n=======[Hapus Profile]=======")
 				userResult, err := controllers.DeleteUser(NoHp, userService)
 				if err != nil {
 					fmt.Println(err)
@@ -93,18 +102,22 @@ func main() {
 				fmt.Println("Akun sudah berhasil di hapus")
 				NoHp = ""
 			case 6:
+				fmt.Println("\n=======[Top-up]=======")
 				controllers.Topup(topupService)
 			case 7:
+				fmt.Println("\n=======[Transfer]=======")
 				controllers.Transfer(NoHp, transferService)
-				break
 			case 8:
+				fmt.Println("\n=======[History Topup]=======")
 				controllers.HistoryTopup(NoHp, topupService)
 			case 9:
+				fmt.Println("\n=======[History Transfer]=======")
 				controllers.HistoryTransfer(NoHp, transferService)
 			case 10:
+				fmt.Println("\n=======[Cari Profile Orang]=======")
 				controllers.SearchProfile(userService)
 			case 0:
-				fmt.Println("Terimakasih Telah bertransaksi.")
+				fmt.Println("\n=======[Terimakasih telah bertransaksi.]=======")
 				NoHp = ""
 			default:
 				fmt.Println("Masukkan sesuai di menu.")
@@ -112,7 +125,7 @@ func main() {
 		}
 
 		terminator := ""
-		fmt.Print("\n\n\nApakah mau lanjut? y/n\n")
+		fmt.Print("\n\nApakah mau lanjut? y/n\n")
 		fmt.Scanln(&terminator)
 		if terminator != "y" {
 			isLanjutkan = false
