@@ -8,7 +8,7 @@ import (
 func Topup(topupService services.Topup) {
 	var nominal float64
 	var noHp string
-	fmt.Println("Masukkkan nomor telepon tujuan: ")
+	fmt.Println("\nMasukkkan nomor telepon tujuan: ")
 	fmt.Scanln(&noHp)
 
 	fmt.Println("Masukkkan nominal anda:")
@@ -42,10 +42,9 @@ func HistoryTopup(noHP string, topupService services.Topup) {
 	}
 
 	for _, value := range topupHistoryResult.UserTopup {
-		fmt.Println()
-		fmt.Println("=======")
-		fmt.Println("Nama user: ", topupHistoryResult.Nama)
-		fmt.Println("Nominal Topup: ", value.NominalTopup)
-		fmt.Println("Tanggal Topup: ", value.CreatedAt.Format("2006-01-02 15:04:05"))
+		fmt.Println("\n=======")
+		fmt.Println("Nama user     : ", topupHistoryResult.Nama)
+		fmt.Println("Nominal Topup : ", value.NominalTopup)
+		fmt.Println("Tanggal Topup : ", value.CreatedAt.Format("2006-01-02 15:04:05"))
 	}
 }

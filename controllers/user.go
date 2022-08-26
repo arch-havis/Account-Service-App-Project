@@ -10,9 +10,9 @@ import (
 func Login(db *sql.DB) string {
 	noHp := ""
 	password := ""
-	fmt.Println("Masukkan no hp")
+	fmt.Println("\nMasukkan no telepon: ")
 	fmt.Scanln(&noHp)
-	fmt.Println("Masukkan password")
+	fmt.Println("\nMasukkan password: ")
 	fmt.Scanln(&password)
 
 	userResult, err := services.Login(db, noHp, password)
@@ -23,17 +23,17 @@ func Login(db *sql.DB) string {
 	}
 
 	if userResult.UserId == 0 {
-		fmt.Println("No Hp atau password tidak ditemukan.")
+		fmt.Println("No Telepon atau password tidak ditemukan.")
 		return ""
 	}
 
-	fmt.Println("Selamat datang berhasil login.")
+	fmt.Println("\nSelamat datang berhasil login.")
 	return userResult.NoTelepon
 }
 
 func SearchProfile(userService services.User) {
 	var noHp string
-	fmt.Println("Masukkan No Hp")
+	fmt.Println("Masukkan No Telepon")
 	fmt.Scanln(&noHp)
 	userResult, err := userService.FindByNoHp(noHp)
 	if err != nil {
@@ -50,18 +50,18 @@ func SearchProfile(userService services.User) {
 func Register(serviceUser services.User) {
 	var userData entities.Users
 	PilihanGender := false
-	fmt.Println("Masukan Nama")
+	fmt.Println("\nMasukan Nama: ")
 	fmt.Scanln(&userData.Nama)
-	fmt.Println("Masukan No Telepon")
+	fmt.Println("\nMasukan No Telepon: ")
 	fmt.Scanln(&userData.NoTelepon)
-	fmt.Println("Masukan Password")
+	fmt.Println("\nMasukan Password: ")
 	fmt.Scanln(&userData.Password)
-	fmt.Println("Masukan Alamat")
+	fmt.Println("\nMasukan Alamat: ")
 	fmt.Scanln(&userData.Alamat)
-	fmt.Println("Masukan Gender")
-	fmt.Println("1 Laki-laki\n2 Perempuan")
+	fmt.Println("\nMasukan Gender: ")
+	fmt.Println("\n#1 Laki-laki\n#2 Perempuan")
 	fmt.Scanln(&PilihanGender)
-	fmt.Println("Masukan Saldo")
+	fmt.Println("\nMasukan Saldo: ")
 	fmt.Scanln(&userData.Saldo)
 
 	switch PilihanGender {
@@ -92,19 +92,19 @@ func ReadUser(NoHp string, userService services.User) {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println("======")
+	fmt.Println("\n======")
 	fmt.Println("Atas nama: ", UserData.Nama)
 	fmt.Println("No Telpon: ", UserData.NoTelepon)
-	fmt.Println("Alamat: ", UserData.Alamat)
-	fmt.Println("Gender: ", UserData.Gender)
-	fmt.Println("Saldo: ", UserData.Saldo)
+	fmt.Println("Alamat   : ", UserData.Alamat)
+	fmt.Println("Gender   : ", UserData.Gender)
+	fmt.Println("Saldo    : ", UserData.Saldo)
 	fmt.Println("======")
 }
 
 func UpdateUser(NoHp string, userService services.User) {
 	userData := entities.Users{}
 	PilihanGender := 1
-	fmt.Println("Masukan Nama: ")
+	fmt.Println("\nMasukan Nama: ")
 	fmt.Scanln(&userData.Nama)
 	fmt.Println("Masukan No Telepon: ")
 	fmt.Scanln(&userData.NoTelepon)
